@@ -6,9 +6,9 @@ import org.springframework.data.repository.CrudRepository;
 
 import edu.codigocode.entities.Student;
 
-public interface StudentRepository extends CrudRepository<Student, Long> {
+public interface StudentRepository extends CrudRepository<Student, Integer> {
 
-	  List<Student> findById(int id);
+	  List<Student> findByDni(int id);
 
 	
 }

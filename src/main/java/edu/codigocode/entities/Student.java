@@ -16,7 +16,7 @@ public class Student {
 	
 	 @Id
 	 @GeneratedValue(strategy = GenerationType.AUTO)
-	private long id ;
+	private int id ;
 	@Column(name = "nombre")
 	private String nombre ;
 	
@@ -77,7 +77,7 @@ public class Student {
 
 
 
-	public void setId(long id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 

@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import edu.codigocode.entities.Student;
+import edu.codigocode.modelo.Respuesta;
 import edu.codigocode.repositories.StudentRepository;
 
 @CrossOrigin(origins = "http://localhost:4200")
@@ -28,6 +29,9 @@ public class StudentController {
 	@Autowired
 	 StudentRepository repository;
 
+	@Autowired
+	private	Respuesta<Student> respuesta;
+	
 	 @GetMapping("/student")
 	 public List<Student> getAllCustomers() {
 	   System.out.println("Get all student...");
@@ -47,7 +51,7 @@ public class StudentController {
 	 }
 
 	 @DeleteMapping("/student/{id}")
-	 public ResponseEntity<String> deleteCustomer(@PathVariable("id") long id) {
+	 public ResponseEntity<String> deleteCustomer(@PathVariable("id") int id) {
 	   System.out.println("Delete student with ID = " + id + "...");
 
 	   repository.deleteById(id);
@@ -64,27 +68,37 @@ public class StudentController {
 	   return new ResponseEntity<>("All customers have been deleted!", HttpStatus.OK);
 	 }
 
-	 @GetMapping(value = "student/id/{id}")
-	 public List<Student> findByAge(@PathVariable int id) {
+	 @GetMapping(value = "student/id/{dni}")
+	 public List<Student> findByDni(@PathVariable int dni) {
 
-	   List<Student> student = repository.findById(id);
+	   List<Student> student = repository.findByDni(dni);
 	   return student;
 	 }
 
 	 @PutMapping("/student/{id}")
-	 public ResponseEntity<Student> updateCustomer(@PathVariable("id") long id, @RequestBody Student student) {
+	 public ResponseEntity<Student> updateCustomer(@PathVariable("id") int id, @RequestBody Student student) {
 	   System.out.println("Update Student with ID = " + id + "...");
 
-	   Optional<Student> customerData = repository.findById(id);
+	   Optional<Student> studentData = repository.findById(id);
 
-	   if (customerData.isPresent()) {
-		   Student _student = customerData.get();
+	   if (studentData.isPresent()) {
+		   Student _student = studentData.get();
 	     _student.setNombre(student.getNombre());
 	     _student.setApellido(student.getApellido());
+	     _student.setDni(student.getDni());
+	     _student.setFecha_nacimiento(student.getFecha_nacimiento());
+	     _student.setMail(student.getMail());
+	     _student.setObra_social(student.getObra_social());
+	     _student.setCert_medico(student.getCert_medico());
+	     _student.setNum_socio(student.getNum_socio());
 	     _student.setEstado_cuota(student.isEstado_cuota());
 	     return new ResponseEntity<>(repository.save(_student), HttpStatus.OK);
 	   } else {
 	     return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	   }
 	 }
-	}
+}
+
+	 
+	 
+	
