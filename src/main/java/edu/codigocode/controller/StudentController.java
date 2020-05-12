@@ -33,8 +33,8 @@ public class StudentController {
 	private	Respuesta<Student> respuesta;
 	
 	 @GetMapping("/student")
-	 public List<Student> getAllCustomers() {
-	   System.out.println("Get all student...");
+	 public List<Student> getAllStudents() {
+	   System.out.println("Obteniendo los alumnos");
 
 	   List<Student> student = new ArrayList<>();
 	   repository.findAll().forEach(student::add);
@@ -43,7 +43,7 @@ public class StudentController {
 	 }
 
 	 @PostMapping(value = "/student/create")
-	 public Student postCustomer(@RequestBody Student student) {
+	 public Student postStudent(@RequestBody Student student) {
 
 		 Student _student = repository.save(new Student(student.getNombre(),student.getApellido(), student.getDni() ,student.getFecha_nacimiento()
 				 , student.getMail() , student.getObra_social() , student.getCert_medico() , student.getNum_socio()));
@@ -51,21 +51,21 @@ public class StudentController {
 	 }
 
 	 @DeleteMapping("/student/{id}")
-	 public ResponseEntity<String> deleteCustomer(@PathVariable("id") int id) {
-	   System.out.println("Delete student with ID = " + id + "...");
+	 public ResponseEntity<String> deleteStudent(@PathVariable("id") int id) {
+	   System.out.println("Eiminando alumno con id = " + id + "...");
 
 	   repository.deleteById(id);
 
-	   return new ResponseEntity<>("Student has been deleted!", HttpStatus.OK);
+	   return new ResponseEntity<>("El alumno se elimino", HttpStatus.OK);
 	 }
 
 	 @DeleteMapping("/student/delete")
-	 public ResponseEntity<String> deleteAllCustomers() {
-	   System.out.println("Delete All customers...");
+	 public ResponseEntity<String> deleteAllStudents() {
+	   System.out.println("Borrar todos los alumnos");
 
 	   repository.deleteAll();
 
-	   return new ResponseEntity<>("All customers have been deleted!", HttpStatus.OK);
+	   return new ResponseEntity<>("Todos los alumnos fueron eliminados", HttpStatus.OK);
 	 }
 
 	 @GetMapping(value = "student/id/{dni}")
@@ -76,7 +76,7 @@ public class StudentController {
 	 }
 
 	 @PutMapping("/student/{id}")
-	 public ResponseEntity<Student> updateCustomer(@PathVariable("id") int id, @RequestBody Student student) {
+	 public ResponseEntity<Student> updateStudent(@PathVariable("id") int id, @RequestBody Student student) {
 	   System.out.println("Update Student with ID = " + id + "...");
 
 	   Optional<Student> studentData = repository.findById(id);

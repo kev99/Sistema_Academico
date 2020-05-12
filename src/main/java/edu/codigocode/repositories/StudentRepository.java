@@ -8,7 +8,7 @@ import edu.codigocode.entities.Student;
 
 public interface StudentRepository extends CrudRepository<Student, Integer> {
 
-	  List<Student> findByDni(int id);
+	  List<Student> findByDni(int dni);
 
 	
 }

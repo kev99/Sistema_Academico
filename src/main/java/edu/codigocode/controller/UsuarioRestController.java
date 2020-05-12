@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import edu.codigocode.entities.Usuario;
+import edu.codigocode.entities.User;
 import edu.codigocode.modelo.Respuesta;
 import edu.codigocode.modelo.Respuesta1;
 import edu.codigocode.repositories.UsuarioRepository;
@@ -25,10 +25,10 @@ public class UsuarioRestController {
 	private Respuesta1 respuesta1;
 	
 	@Autowired
-	private Respuesta<Usuario> respuesta;
+	private Respuesta<User> respuesta;
 	
 	@PostMapping(value="guardoUsuari")
-	public ResponseEntity guardoUsuario(@RequestBody Usuario usuario) {
+	public ResponseEntity guardoUsuario(@RequestBody User usuario) {
 		System.out.println(usuario);
 		respuesta1.setStatus(200);
 		respuesta1.setMensaje("El mjs se guardo ok");
@@ -38,7 +38,7 @@ public class UsuarioRestController {
 	
 	@GetMapping(value = "getUsuario/{id}")
 	public ResponseEntity<Respuesta> getUser (@PathVariable("id") int id){
-		Usuario user = new Usuario();
+		User user = new User();
 		respuesta.setCodigo(205);
 		respuesta.setMensaje("El usuario no ha sido encontrado intente con otro id, ID utilizado:" + id);
 		usuarioRepository.findById(id).ifPresent(x -> { 
@@ -55,7 +55,7 @@ public class UsuarioRestController {
 	}
 	
 	@PostMapping(value = "guardoUsuario")
-	public ResponseEntity<Respuesta> saveUser (@RequestBody Usuario user){
+	public ResponseEntity<Respuesta> saveUser (@RequestBody User user){
 		respuesta.setObjetoRespuesta(user);
 		try {
 			usuarioRepository.save(user);
@@ -79,15 +79,15 @@ public class UsuarioRestController {
 		return ResponseEntity.ok(respuesta);
 }
 	@GetMapping(value="allUsers")
-	public ResponseEntity<Iterable<Usuario>> getAllUsers () {
+	public ResponseEntity<Iterable<User>> getAllUsers () {
 		
 		return ResponseEntity.ok(usuarioRepository.findAll());
 		
 	}
 	
 	@PostMapping(value="modifyUser")
-	public ResponseEntity<Respuesta> modifyUser(@RequestBody Usuario user){
-		Usuario u = usuarioRepository.findById(user.getId()).get();
+	public ResponseEntity<Respuesta> modifyUser(@RequestBody User user){
+		User u = usuarioRepository.findById(user.getId()).get();
 		u.setName(user.getName());
 		u.setMail(user.getMail());
 		u.setPsw(user.getPsw());
