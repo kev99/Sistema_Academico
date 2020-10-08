@@ -2,6 +2,7 @@ package edu.codigocode.entities;
 
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -12,21 +13,26 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.persistence.JoinColumn;
+import javax.persistence.Transient;
+import javax.transaction.Transactional;
+
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 @Entity
 @Table(name = "alumno")
 public class Student {
 	
-	 @Id
-	 @GeneratedValue(strategy = GenerationType.AUTO)
+	@Id
+	@GeneratedValue(strategy= GenerationType.IDENTITY)
 	private int id ;
+	 
 	@Column(name = "nombre")
 	private String nombre ;
 	
@@ -54,12 +60,11 @@ public class Student {
 	@Column(name = "estado_cuota")
 	private boolean estado_cuota;
 	
-
-	@OneToMany(mappedBy = "alumno", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	private Set<Inscription> inscriptiones;
+	@JsonIgnore
+	@OneToMany( cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.MERGE}, mappedBy = "alumno", fetch = FetchType.LAZY)
+	private Set<Inscription> inscriptiones=new HashSet<Inscription>();
 		
-	
-	@OneToMany(mappedBy = "alumno", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "alumno", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Set<Pay>  pagos;
 	
 
@@ -249,14 +254,23 @@ public class Student {
 	}
 
 
-	
-	
-	
-	
-	
-	
-	
-	
+
+	@Override
+	public String toString() {
+		return "Student [id=" + id + ", nombre=" + nombre + ", apellido=" + apellido + ", dni=" + dni
+				+ ", fecha_nacimiento=" + fecha_nacimiento + ", mail=" + mail + ", obra_social=" + obra_social
+				+ ", cert_medico=" + cert_medico + ", num_socio=" + num_socio + ", estado_cuota=" + estado_cuota + "]";
+	}
+
+
+
+	public Student(int id) {
+		super();
+		this.id = id;
+	}
+
+
+
 	
 	}
 	

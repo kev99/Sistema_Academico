@@ -2,6 +2,7 @@ package edu.codigocode.entities;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -11,6 +12,11 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+import javax.transaction.Transactional;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 
 @Entity
 @Table(name = "inscripcion")
@@ -18,15 +24,16 @@ public class Inscription {
 
 	  
 	  @Id
-	    @GeneratedValue(strategy = GenerationType.AUTO)
+	    @GeneratedValue(strategy = GenerationType.IDENTITY)
 	  private int id;
 	
-	   
-	  @ManyToOne(fetch = FetchType.EAGER)
+	  
+	  @ManyToOne
 		 @JoinColumn(name = "id_alum")
 	     private Student alumno;
 	  
-	  @ManyToOne(fetch = FetchType.EAGER)
+	  
+	  @ManyToOne
 		 @JoinColumn(name = "id_act")
 	     private Activity actividad;
 	  
@@ -89,6 +96,30 @@ public class Inscription {
 			this.actividad = actividad;
 			this.fecha_ins = fecha_ins;
 		}
+		
+		
+		
+
+		public Inscription(Student alumno, Date fecha_ins) {
+			super();
+			this.alumno = alumno;
+			this.fecha_ins = fecha_ins;
+		}
+
+	
+
+		public Inscription(Activity actividad, Date fecha_ins) {
+			super();
+			this.actividad = actividad;
+			this.fecha_ins = fecha_ins;
+		}
+
+		@Override
+		public String toString() {
+			return "Inscription [id=" + id + ", alumno=" + alumno + ", actividad=" + actividad + ", fecha_ins="
+					+ fecha_ins + "]";
+		}
+		
 
 		
 }
