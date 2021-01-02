@@ -68,8 +68,8 @@ public class Student {
 	private Set<Pay>  pagos;
 	
 
-	@OneToMany(mappedBy = "alumno", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	private Set<Asistence>  asistencias;
+	@OneToMany( cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.MERGE}, mappedBy = "alumno", fetch = FetchType.LAZY)
+	private Set<Assistence>  asistencias;
 	
 	 @OneToOne(mappedBy = "alumno")
 	  private Adult adulto;

@@ -54,8 +54,8 @@ public class Activity {
 	private Set<Pay>  pagos;
 
 	@JsonIgnore
-	 @OneToMany(mappedBy = "actividad", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	 private Set<Asistence>  asistencias;
+	 @OneToMany( cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.MERGE}, mappedBy = "actividad", fetch = FetchType.LAZY)
+	 private Set<Assistence>  asistencias;
 
 
 	public int getId_a() {
@@ -138,12 +138,12 @@ public class Activity {
 	}
 
 
-	public Set<Asistence> getAsistencias() {
+	public Set<Assistence> getAsistencias() {
 		return asistencias;
 	}
 
 
-	public void setAsistencias(Set<Asistence> asistencias) {
+	public void setAsistencias(Set<Assistence> asistencias) {
 		this.asistencias = asistencias;
 	}
 

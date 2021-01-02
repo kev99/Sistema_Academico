@@ -26,12 +26,10 @@ public class Inscription {
 	  @Id
 	    @GeneratedValue(strategy = GenerationType.IDENTITY)
 	  private int id;
-	
 	  
 	  @ManyToOne
 		 @JoinColumn(name = "id_alum")
 	     private Student alumno;
-	  
 	  
 	  @ManyToOne
 		 @JoinColumn(name = "id_act")
@@ -40,6 +38,10 @@ public class Inscription {
 		@Column(name = "fecha_ins")
 		private Date fecha_ins ;
 
+		
+		
+		
+		
 		public int getId() {
 			return id;
 		}

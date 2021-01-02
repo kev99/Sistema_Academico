@@ -1,9 +1,17 @@
 package edu.codigocode.repositories;
 
+import java.util.List;
+
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 
-import edu.codigocode.entities.Asistence;
+import edu.codigocode.entities.Assistence;
 
-public interface AssistenceRepository extends CrudRepository <Asistence, Integer>{
+ @Repository
+public interface AssistenceRepository extends CrudRepository <Assistence, Integer>{
+	
 
+@Query("SELECT i FROM Assistence i WHERE i.alumno.id = :id")
+	List<Assistence> getAssistences(int id);
 }
